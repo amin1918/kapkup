@@ -3,9 +3,12 @@ import { FiShoppingBag, FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 import Container from "../container/container";
 import Link from "next/link";
+import { useUser } from "@/stores/useUser";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const {isAuthed} = useUser()
+  
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-white border border-stone-200">
@@ -38,12 +41,24 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          <Link
+          {isAuthed? 
+           <Link
+
             href="/cart"
             className="p-1 rounded-md hover:bg-stone-100 flex items-center justify-center"
           >
             <FiShoppingBag size={16} />
           </Link>
+          : 
+          <Link
+
+            href="/login"
+            className="p-1 rounded-md hover:bg-stone-100 flex items-center justify-center"
+          >
+            <FiShoppingBag size={16} />
+          </Link>
+          }
+         
 
           <Link
             href="/business/businesslogin"
