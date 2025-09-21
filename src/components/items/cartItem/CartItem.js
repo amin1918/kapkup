@@ -16,7 +16,7 @@ export default function CartItem({ qty, title, description, price, id }) {
 
       {/* Price + Quantity */}
       <div className="flex items-center justify-between">
-        <span className="text-red-600 font-bold text-lg">{price}</span>
+        <span className="text-red-600 font-bold text-lg">${price}</span>
         <QuantityControl
           qty={qty}
           onIncrease={() => handleAdd(id)}

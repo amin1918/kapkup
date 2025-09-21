@@ -1,5 +1,5 @@
 "use client";
-import { FiShoppingBag, FiSearch, FiMenu, FiX } from "react-icons/fi";
+import { FiShoppingBag, FiSearch, FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import { useState } from "react";
 import Container from "../container/container";
 import Link from "next/link";
@@ -7,8 +7,8 @@ import { useUser } from "@/stores/useUser";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const {isAuthed} = useUser()
-  
+  const { isAuthed,logout } = useUser()
+
 
   return (
     <div className="fixed top-0 left-0 w-full z-50 bg-white border border-stone-200">
@@ -41,24 +41,24 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          {isAuthed? 
-           <Link
+          {isAuthed ?
+            <Link
 
-            href="/cart"
-            className="p-1 rounded-md hover:bg-stone-100 flex items-center justify-center"
-          >
-            <FiShoppingBag size={16} />
-          </Link>
-          : 
-          <Link
+              href="/cart"
+              className="p-1 rounded-md hover:bg-stone-100 flex items-center justify-center"
+            >
+              <FiShoppingBag size={16} />
+            </Link>
+            :
+            <Link
 
-            href="/login"
-            className="p-1 rounded-md hover:bg-stone-100 flex items-center justify-center"
-          >
-            <FiShoppingBag size={16} />
-          </Link>
+              href="/login"
+              className="p-1 rounded-md hover:bg-stone-100 flex items-center justify-center"
+            >
+              <FiShoppingBag size={16} />
+            </Link>
           }
-         
+
 
           <Link
             href="/business/businesslogin"
@@ -66,13 +66,22 @@ export default function Navbar() {
           >
             Business
           </Link>
+          {!isAuthed ? (
+            <Link
+              href="/login"
+              className="hidden md:inline-block px-4 py-1 rounded-lg shadow text-xs font-medium hover:bg-stone-100"
+            >
+              Login
+            </Link>
+          ) : (
+            <button
+              onClick={()=>logout()} 
+              className="hidden md:inline-flex items-center aspect-square p-1 bg-red-100 hover:cursor-pointer rounded-lg shadow text-xs font-medium hover:bg-red-200"
+            >
+              <FiLogOut className="mr-1" />
+            </button>
+          )}
 
-          <Link
-            href="/login"
-            className="hidden md:inline-block px-4 py-1 rounded-lg shadow text-xs font-medium hover:bg-stone-100"
-          >
-            Login
-          </Link>
 
           {/* Mobile Menu Button */}
           <button

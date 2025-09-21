@@ -10,7 +10,7 @@ export default function QuantityControl({ qty, onIncrease, onDecrease }) {
       >
         <FiMinus size={16} />
       </button>
-      <span className="font-medium">{qty}</span>
+      <span className="font-medium w-5 text-center">{qty}</span>
       <button
         className="p-1 rounded-md border text-gray-500 hover:bg-stone-100 hover:cursor-pointer"
         onClick={onIncrease}

@@ -15,7 +15,7 @@ export default function Page() {
       await fetchBasket();
     };
     fetchData();
-  }, []); // dependency array خالی چون fetchBasket ثابت است
+  }, []);
 
   const basketItems = basket?.items || [];
   console.log(basketItems);
