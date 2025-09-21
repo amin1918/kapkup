@@ -22,39 +22,32 @@ export default function CartSummary() {
 
       {/* Cart items */}
       <div className="space-y-3">
-        {cartItems.map((item) => {
-          const id = item.template?._id;
-          return (
-            <>
-            <div
-              key={id}
-              className="flex items-center justify-between text-gray-700"
-            >
-              <span className="text-sm truncate pr-2 max-w-[60%]">
-                {item?.template?.title}
-              </span>
+        <div className="space-y-3 max-h-[360px] overflow-y-auto pr-5 pl-3">
+          {cartItems.map((item) => {
+            const id = item.template?._id;
+            return (
+              <div key={id}>
+                <div className="flex items-center justify-between text-gray-700">
+                  <span className="text-sm truncate pr-2 max-w-[60%]">
+                    {item?.template?.title}
+                  </span>
 
-             
-              <div className="min-w-[100px] flex justify-end">
-                <QuantityControl
-                  qty={item?.quantity}
-                  onDecrease={() => handleDecrease(id)}
-                  onIncrease={() => handleAdd(id)}
-                />
-                
-
+                  <div className="min-w-[100px] flex justify-end">
+                    <QuantityControl
+                      qty={item?.quantity}
+                      onDecrease={() => handleDecrease(id)}
+                      onIncrease={() => handleAdd(id)}
+                    />
+                  </div>
+                </div>
+                <hr className="border-gray-200 my-3" />
               </div>
-              
-              
-            </div>
-             <hr className="border-gray-200" />
-            
-            </>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-     
+
 
       {/* Items count */}
       <div className="flex justify-between text-gray-600 text-sm">
@@ -85,9 +78,9 @@ export default function CartSummary() {
       </div>
 
       {/* Checkout button */}
-      <button className="w-full py-3 mt-3 rounded-xl text-white font-semibold bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 shadow-md transition-all hover:scale-[1.02]">
+      <a href="/cart/checkout" className=" text-center w-full py-3 mt-3 rounded-xl text-white font-semibold bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 shadow-md transition-all hover:scale-[1.02]">
         Checkout
-      </button>
+      </a>
     </div>
   );
 }
