@@ -1,69 +1,32 @@
-import { basketAPI } from "@/services/basketServices";
-import axios from "axios";
+import { basketAPI, addToBasket, removeFromBasket } from "@/services/basketServices";
 import { create } from "zustand";
 
 export const useBasket = create((set) => ({
     basket: null,
-    
 
-
-
+    // get basket
     fetchBasket: async () => {
         const data = await basketAPI();
         if (data && data.success) {
             set({ basket: data.data });
+        } else {
+            set({ basket: null });
         }
     },
-    handleAdd: async (id) => {
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                console.warn("please login to add items to basket");
-                return;
-            }
-            const res = await axios.post(
-                "https://api.kapkup.com/api/basket/add",
-                {
-                    templateId: id,
-                    quantity: 1
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
-            set({ basket: res.data.data })
-        } catch (err) {
-            console.error("Add to basket error:", err);
-        }
 
+    // add
+    handleAdd: async (templateId) => {
+        const res = await addToBasket(templateId, 1);
+        if (res && res.success) {
+            set({ basket: res.data });
+        }
     },
-      handleDecrease: async (id) => {
-        try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                console.warn("please login to add items to basket");
-                return;
-            }
-            const res = await axios.post(
-                "https://api.kapkup.com/api/basket/remove",
-                {
-                    templateId: id,
-                    quantity: 1
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
-            set({ basket: res.data.data })
-        } catch (err) {
-            console.error("Add to basket error:", err);
-        }
 
+    // increase
+    handleDecrease: async (templateId) => {
+        const res = await removeFromBasket(templateId, 1);
+        if (res && res.success) {
+            set({ basket: res.data });
+        }
     },
 }));

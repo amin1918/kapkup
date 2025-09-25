@@ -32,7 +32,7 @@ export default function Checkout() {
                 <div className="shadow-xl rounded-2xl p-6 bg-white flex flex-col gap-5 border border-gray-100">
                     <h2 className="text-xl font-bold text-gray-800">Cart Summary</h2>
                     <div className=" rounded-2xl p-1 bg-white flex flex-col gap-2 w-full  ">
-                     
+
 
                         {/* Cart items */}
                         <div className="space-y-3">
@@ -79,7 +79,7 @@ export default function Checkout() {
                         {basket?.savedAmount > 0 && (
                             <div className="flex justify-between text-green-600 text-sm font-medium">
                                 <span>Discount</span>
-                                <span>- ${basket?.savedAmount}</span>
+                                <span>- ${basket?.savedAmount.toFixed(2)}</span>
                             </div>
                         )}
 
@@ -88,7 +88,7 @@ export default function Checkout() {
                         {/* Total */}
                         <div className="flex justify-between font-bold text-lg text-gray-800">
                             <span>Total</span>
-                            <span>${basket?.totalPrice}</span>
+                            <span>${basket?.totalPrice.toFixed(2)}</span>
                         </div>
                     </div>
                 </div>
@@ -98,7 +98,6 @@ export default function Checkout() {
                     <h2 className="text-xl font-bold text-gray-800 mb-2">
                         Payment Details
                     </h2>
-
                     <input
                         type="text"
                         placeholder="Full Name"

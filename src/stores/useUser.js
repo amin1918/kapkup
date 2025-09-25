@@ -1,65 +1,47 @@
-import axios from "axios";
+import authservices from "@/services/authservices";
 import { create } from "zustand";
 
 export const useUser = create((set) => ({
     token: "",
     isAuthed: false,
 
+    // Register a new user
     register: async (userInfo) => {
         try {
-            await axios.post(
-                "https://api.kapkup.com/api/auth/register",
-                userInfo,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                },
-            )
-
+            const response = await authservices.register(userInfo);
+            return response;
         } catch (error) {
-            console.log(error);
+            console.log("Register error:", error);
+            throw error;
         }
-
     },
+
+    // Login 
     login: async (userInfo) => {
         try {
-            const { data } = await axios.post("https://api.kapkup.com/api/auth/login",
-                userInfo,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
-                }
-            )
-            const token = data.data.token
-            if (token) {
-
-                localStorage.setItem("token", token)
-                set({ token: token, isAuthed: true })
+            const response = await authservices.login(userInfo);
+            if (response && response.data && response.data.token) {
+                set({ token: response.data.token, isAuthed: true });
             }
-
+            return response;
         } catch (error) {
-            console.log(error);
+            console.log("Login error:", error);
+            throw error;
         }
-
     },
+
+    // Logout
     logout: () => {
-        set({ isAuthed: false })
-        localStorage.removeItem("token")
-        set({ token: "", isAuthed: false })
-        window.location.reload()
-
-
+        authservices.logout();
+        set({ token: "", isAuthed: false });
     },
-    initialize :()=>{
+    // initialize
+    initialize: () => {
         const token = localStorage.getItem("token");
-        if (token){
-            set({isAuthed:true, token: token})
-        }else{
-            set({token, isAuthed:false})
+        if (token) {
+            set({ token, isAuthed: true });
+        } else {
+            set({ token: "", isAuthed: false });
         }
-    }
-
-
-}))
+    },
+}));

@@ -58,14 +58,14 @@ export default function CartSummary() {
       {/* Subtotal */}
       <div className="flex justify-between text-gray-600 text-sm">
         <span>Subtotal</span>
-        <span>${basket?.totalPriceWithoutDiscount}</span>
+        <span>${basket?.totalPriceWithoutDiscount.toFixed(2)}</span>
       </div>
 
       {/* Discount */}
       {basket?.savedAmount > 0 && (
         <div className="flex justify-between text-green-600 text-sm font-medium">
           <span>Discount</span>
-          <span>- ${basket?.savedAmount}</span>
+          <span>- ${basket?.savedAmount.toFixed(2)}</span>
         </div>
       )}
 
@@ -74,7 +74,7 @@ export default function CartSummary() {
       {/* Total */}
       <div className="flex justify-between font-bold text-lg text-gray-800">
         <span>Total</span>
-        <span>${basket?.totalPrice}</span>
+        <span>${basket?.totalPrice.toFixed(2)}</span>
       </div>
 
       {/* Checkout button */}
